@@ -49,6 +49,20 @@ void make_vga_terminal(void)
     }
 }
 
+void reset_buffer()
+{
+    terminal_color = vga_color_entry(black, white);
+    buffer = (uint16_t*) 0xB8000;
+    for(size_t y = 0; y < HEIGHT; y++)
+    {
+        for(size_t x = 0; x < WIDTH; x++)
+        {
+            const size_t idx = y * WIDTH + x;
+            buffer[idx] = vga_entry(' ', terminal_color);
+        }
+    }
+}
+
 void set_terminal_color(uint8_t color)
 {
     terminal_color = color;
@@ -62,6 +76,8 @@ void put_terminal_entry_at(char c, uint8_t color, size_t x, size_t y)
 
 void put_terminal_char(char c)
 {
+    //Update position of cursor
+    update_cursor_position(terminal_column, terminal_row);
     if(c == '\n')
     {
         //Go to next line
@@ -94,5 +110,15 @@ void write_to_terminal(const char* data, size_t size)
 void write_string_to_terminal(char* data)
 {
     write_to_terminal(data, strlen(data));
+}
+
+void update_cursor_position(int x, int y)
+{
+    //Set the new position
+    uint16_t position = y * WIDTH + x;
+    outb(0x3D4, 0x0F);
+    outb(0x3D5, (uint8_t) (position & 0xFF));
+    outb(0x3D4, 0x0E);
+    outb(0x3D5, (uint8_t) ((position >> 8) & 0xFF));
 }
 #endif

@@ -14,7 +14,7 @@ tinaos:
 	echo "Building TINAOS bootstrap..."
 	mkdir -p "output"
 	$(AS) src/boot/boot.s -o output/boot.o
-	$(GCC) -c src/kernel/kernel.c -Isrc/include -Isrc/include/newlib/include -Isrc/include/newlib/lib -o output/kernel.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+	$(GCC) -c src/kernel/kernel.c -Isrc/include -o output/kernel.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 	$(GCC) -T src/boot/linker.ld -o output/TINAOS.bin -ffreestanding -O2 -nostdlib  output/boot.o output/kernel.o -lgcc
 	mkdir -p output/isodir/boot/grub
 	cp src/boot/grub.cfg output/isodir/boot/grub/grub.cfg
