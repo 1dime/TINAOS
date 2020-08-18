@@ -1,3 +1,5 @@
+#ifndef SBRK
+#define SBRK
 extern void stack_top;
 extern void stack_bottom;
 void *g_heap = (void *)0;
@@ -12,3 +14,4 @@ void *sbrk(int nbytes)
         return (void *)-1; // No more heap
     return alloc;
 }
+#endif

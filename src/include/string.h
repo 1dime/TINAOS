@@ -1,3 +1,5 @@
+#ifndef STRING
+#define STRING
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -11,3 +13,4 @@ size_t strlen(const char* str)
     return len;
 }
 
+#endif

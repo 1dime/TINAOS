@@ -1,3 +1,6 @@
+
+#ifndef MALLOC
+#define MALLOC
 #define BLOCK 1024
 
 #include <sys/sbrk.h>
@@ -74,3 +77,4 @@ void free(void *ptr)
      else p->s.link = bp;
      freep = p;
 }
+#endif

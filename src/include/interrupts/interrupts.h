@@ -1,3 +1,5 @@
+#ifndef INTERRUPTS
+#define INTERRUPTS
 int inb(unsigned int port)
 {
     int val;
@@ -9,3 +11,4 @@ void outb(unsigned int port, unsigned char value)
 {
     asm volatile("outb %%al,%%dx": : "d" (port), "a" (value));
 }
+#endif

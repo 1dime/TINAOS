@@ -1,3 +1,5 @@
+#ifndef VGA
+#define VGA
 #include <stdint.h>
 #include <stddef.h>
 #include <memory.h>
@@ -93,3 +95,4 @@ void write_string_to_terminal(char* data)
 {
     write_to_terminal(data, strlen(data));
 }
+#endif

@@ -1,3 +1,5 @@
+#ifndef KEYBOARD
+#define KEYBOARD
 #include <interrupts/interrupts.h>
 int scan_code()
 {
@@ -13,3 +15,4 @@ char translate_code(int code)
 {
     //This function is to convert the given character code to a char
 }
+#endif

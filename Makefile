@@ -26,3 +26,7 @@ usb:
 qemu:
 	make tinaos
 	qemu-system-i386  -cdrom output/TINAOS.iso -serial stdio -m 1024
+all:
+	make install
+	make cross-compiler
+	make tinaos
