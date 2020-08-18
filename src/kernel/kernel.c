@@ -1,3 +1,4 @@
+
 #include <display/vga.h>
 #include <drivers/keyboard.h>
 void kernel_start()

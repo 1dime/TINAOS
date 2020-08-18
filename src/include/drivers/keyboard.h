@@ -1,5 +1,4 @@
 #include <interrupts/interrupts.h>
-#include <helper/font_helper.h>
 int scan_code()
 {
     //Verify that we have data passed
