@@ -49,20 +49,6 @@ void make_vga_terminal(void)
     }
 }
 
-void reset_buffer()
-{
-    terminal_color = vga_color_entry(black, white);
-    buffer = (uint16_t*) 0xB8000;
-    for(size_t y = 0; y < HEIGHT; y++)
-    {
-        for(size_t x = 0; x < WIDTH; x++)
-        {
-            const size_t idx = y * WIDTH + x;
-            buffer[idx] = vga_entry(' ', terminal_color);
-        }
-    }
-}
-
 void set_terminal_color(uint8_t color)
 {
     terminal_color = color;

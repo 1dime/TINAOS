@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "cstddef": "c"
+        "cstddef": "c",
+        "*.tcc": "cpp",
+        "rope": "cpp"
     }
 }

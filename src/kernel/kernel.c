@@ -1,6 +1,7 @@
 
 #include <display/vga.h>
 #include <drivers/keyboard.h>
+#include <fcntl.h>
 int kernel_start()
 {
     //Setup the terminal goods
@@ -8,8 +9,12 @@ int kernel_start()
     //Write a hello
     write_string_to_terminal("TINAOS Kernel v1.0\n");
     //First loop is for checking if user wants to enter debug mode
-    while(1)
+    while(true)
     {
-        //Loop de loop. All kernel events will happen here
+        if(key_event_occurred())
+        {
+            int code = scan_code();
+            send_character(code);
+        }
     }
 }

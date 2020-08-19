@@ -16,13 +16,19 @@ int scan_code()
 
 char send_character(int code)
 {
+    char character = ' ';
     switch(code)
     {
-        case 0x46:
-            write_string_to_terminal("ScrollLock");
+        case 0x02:
+            put_terminal_char('1');
+            character = '1';
+            break;
+        case 0x03:
+            put_terminal_char('2');
+            character = '2';
             break;
     }
-    return ' ';
+    return character;
 }
 
 bool key_event_occurred()
