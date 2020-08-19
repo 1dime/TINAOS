@@ -1,7 +1,10 @@
 
 #include <display/vga.h>
 #include <drivers/keyboard.h>
-#include <fcntl.h>
+#include "../drivers/pci.c"
+#include <stdio.h>
+#include <stdlib.h>
+
 int kernel_start()
 {
     //Setup the terminal goods
@@ -11,10 +14,6 @@ int kernel_start()
     //First loop is for checking if user wants to enter debug mode
     while(true)
     {
-        if(key_event_occurred())
-        {
-            int code = scan_code();
-            send_character(code);
-        }
+
     }
 }

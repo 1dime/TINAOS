@@ -3,6 +3,7 @@ binutils-build
 gcc-build
 binutils-src
 gcc-src
+output
 
 binutils.tar.gz
 gcc.tar.gz

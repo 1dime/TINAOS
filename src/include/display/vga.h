@@ -2,14 +2,16 @@
 #define VGA
 #include <stdint.h>
 #include <stddef.h>
-#include <memory.h>
-
+#include <string.h>
 #define WIDTH 80
 #define HEIGHT 25
 
 enum vga_color_palette
 {
     black = 0,
+    green = 2,
+    red = 4,
+    cyan = 3,
     white = 15,
 };
 
@@ -96,6 +98,36 @@ void write_to_terminal(const char* data, size_t size)
 void write_string_to_terminal(char* data)
 {
     write_to_terminal(data, strlen(data));
+}
+
+void write_with_color(enum vga_color_palette color, char* data)
+{
+    //Get the old terminal color
+    uint8_t old_color = terminal_color;
+    //Set the color to cyan font color, white background
+    terminal_color = vga_color_entry(color, white);
+    //Print the data
+    write_string_to_terminal(data);
+    //Reset back to old color
+    terminal_color = old_color;
+}
+
+void write_warning_string(char* data)
+{
+    //Write with cyan warning
+    write_with_color(cyan, data);
+}
+
+void write_error_string(char* data)
+{
+    //Write with red error
+    write_with_color(red, data);
+}
+
+void write_pass_string(char* data)
+{
+    //Write with green pass
+    write_with_color(green, data);
 }
 
 void update_cursor_position(int x, int y)

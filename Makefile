@@ -5,27 +5,29 @@ AS=$(BIN)$(TARGET)-as
 NASM=$(BIN)$(TARGET)-nasm
 
 #Install all requirements
+.PHONY: install
 install:
 	sudo apt install build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo qemu-kvm qemu-system-i386 xorriso curl
 #Are we making the cross compiler?
+.PHONY: cross-compiler
 cross-compiler:
 	cd libs/cross-compiler && make all
+.PHONY: tinaos
 tinaos:
 	echo "Building TINAOS bootstrap..."
 	mkdir -p "output"
 	$(AS) src/boot/boot.s -o output/boot.o
-	$(GCC) -c src/kernel/kernel.c -Isrc/include -I`pwd`/libs/cross-compiler/compiler/bin/usr/local/i686-tinaos/include -I`pwd`/libs/cross-compiler/compiler/bin/usr/local/i686-tinaos/libs -o output/kernel.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-	$(GCC) -T src/boot/linker.ld -o output/TINAOS.bin -ffreestanding -O2 -nostdlib  output/boot.o output/kernel.o -lgcc
+	$(GCC) -c src/kernel/kernel.c -Isrc/include -I`pwd`/libs/cross-compiler/compiler/bin/usr/local/i686-tinaos/include -I`pwd`/libs/cross-compiler/compiler/bin/usr/local/i686-tinaos/libs -o output/kernel.o -std=gnu99 -ffreestanding -O2 -Wall -Wformat=0
+	$(GCC) -T src/boot/linker.ld -o output/TINAOS.bin -ffreestanding -O2 -nostdlib  output/boot.o output/kernel.o -lgcc 
 	mkdir -p output/isodir/boot/grub
 	cp src/boot/grub.cfg output/isodir/boot/grub/grub.cfg
 	cp output/TINAOS.bin output/isodir/boot/TINAOS.bin
 	grub-mkrescue -o output/TINAOS.iso output/isodir
-usb:
-	make tinaos
-	sudo dd if=output/TINAOS.iso of=$(USB) && sync
+.PHONY: qemu
 qemu:
 	make tinaos
 	qemu-system-i386  -cdrom output/TINAOS.iso -serial stdio -m 1024
+.PHONY: all
 all:
 	make install
 	make cross-compiler
