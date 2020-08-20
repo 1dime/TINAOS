@@ -2,7 +2,7 @@ BIN=`pwd`/libs/cross-compiler/compiler/bin/
 TARGET=i686-elf
 GCC=$(BIN)$(TARGET)-gcc
 AS=$(BIN)$(TARGET)-as
-NASM=$(BIN)$(TARGET)-nasm
+NASM=nasm
 
 #Install all requirements
 .PHONY: install
@@ -16,7 +16,7 @@ cross-compiler:
 tinaos:
 	echo "Building TINAOS bootstrap..."
 	mkdir -p "output"
-	$(AS) src/boot/boot.s -o output/boot.o
+	$(NASM) -felf32 src/boot/boot.asm -o output/boot.o
 	$(GCC) -c src/kernel/kernel.c -Isrc/include -I`pwd`/libs/cross-compiler/compiler/bin/usr/local/i686-tinaos/include -I`pwd`/libs/cross-compiler/compiler/bin/usr/local/i686-tinaos/libs -o output/kernel.o -std=gnu99 -ffreestanding -O2 -Wall -Wformat=0
 	$(GCC) -T src/boot/linker.ld -o output/TINAOS.bin -ffreestanding -O2 -nostdlib  output/boot.o output/kernel.o -lgcc 
 	mkdir -p output/isodir/boot/grub

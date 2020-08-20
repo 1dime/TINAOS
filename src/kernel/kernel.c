@@ -14,6 +14,6 @@ int kernel_start()
     //First loop is for checking if user wants to enter debug mode
     while(true)
     {
-
+        //Kernel operations go here
     }
 }
