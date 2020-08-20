@@ -1,9 +1,11 @@
 
 #include <display/vga.h>
+#include <memory.h>
 #include <drivers/keyboard.h>
 #include "../drivers/pci.c"
+#include "../memory/manager.c"
 #include <stdio.h>
-#include <stdlib.h>
+#include "../drivers/ata.c"
 
 int kernel_start()
 {
@@ -14,6 +16,5 @@ int kernel_start()
     //First loop is for checking if user wants to enter debug mode
     while(true)
     {
-        //Kernel operations go here
     }
 }

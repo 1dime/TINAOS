@@ -2,6 +2,22 @@
     "files.associations": {
         "cstddef": "c",
         "*.tcc": "cpp",
-        "rope": "cpp"
+        "rope": "cpp",
+        "array": "c",
+        "hash_map": "c",
+        "hash_set": "c",
+        "deque": "c",
+        "forward_list": "c",
+        "list": "c",
+        "string": "c",
+        "unordered_map": "c",
+        "unordered_set": "c",
+        "vector": "c",
+        "string_view": "c",
+        "slist": "c",
+        "initializer_list": "c",
+        "regex": "c",
+        "valarray": "c",
+        "*.inc": "c"
     }
 }

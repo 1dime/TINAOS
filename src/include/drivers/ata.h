@@ -1,13 +1,17 @@
 #include <stdint.h>
+#include <interrupts/interrupts.h>
+#include <memory/pager.h>
+#include <vfs/vfs.h>
 #ifndef ATA
 #define ATA
 
+extern pager_directory_t *pager_dir;
 typedef struct physical_region_descriptor_table
 {
     uint32_t buffer;
     uint32_t transfer_size;
     uint32_t end;
-} prdt;
+}__attribute__((packed)) prdt;
 
 typedef struct ata_device
 {
@@ -32,7 +36,11 @@ typedef struct ata_device
         uint16_t cylinder_high;
         uint16_t lba_high;
     };
-
+    union
+    {
+        uint16_t drive;
+        uint16_t head;
+    };
     union
     {
         uint16_t command;
@@ -58,7 +66,9 @@ typedef struct ata_device
 
     uint8_t* memory_buffer;
     uint8_t* physical_memory_buffer;
-} ata_device_t;
+
+    char mountpoint[32];
+}__attribute__((packed)) ata_device_t;
 
 //Some ATA device information
 #define ATA_VENDOR_ID 0x8086
@@ -102,5 +112,16 @@ void ata_io_wait(ata_device_t* device);
 //We have to do a software reset
 void ata_software_reset(ata_device_t* device);
 
+void ata_handler(bios_register_t* bios_reg);
 
+void ata_open(vfs_node_t *node, uint32_t flags);
+void ata_close(vfs_node_t *node);
+uint32_t ata_read (vfs_node_t *node, uint32_t offset, uint32_t size, char *buffer);
+uint32_t ata_write(vfs_node_t *node, uint32_t offset, uint32_t size, char *buffer);
+void ata_write_sector(ata_device_t* device, uint32_t lba, char *buffer);
+char *ata_read_sector(ata_device_t* device, uint32_t lba);
+vfs_node_t* make_ata_device(ata_device_t* device);
+void ata_device_start(ata_device_t* device, int primary);
+void detect_ata_device(ata_device_t* dev, int primary);
+void configure_ata();
 #endif

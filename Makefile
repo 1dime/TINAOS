@@ -7,7 +7,7 @@ NASM=nasm
 #Install all requirements
 .PHONY: install
 install:
-	sudo apt install build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo qemu-kvm qemu-system-i386 xorriso curl
+	sudo apt install nasm build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo qemu-kvm qemu-system-i386 xorriso curl
 #Are we making the cross compiler?
 .PHONY: cross-compiler
 cross-compiler:
