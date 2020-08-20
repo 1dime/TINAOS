@@ -2,7 +2,6 @@
 #define VGA
 #include <stdint.h>
 #include <stddef.h>
-#include <string.h>
 #define WIDTH 80
 #define HEIGHT 25
 

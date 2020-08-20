@@ -1,12 +1,7 @@
 #ifndef ATA_C
 #define ATA_C
-#include <memory.h>
-#include <drivers/ata.h>
-#include "../drivers/pci.c"
-#include "../vfs/vfs.c"
 
 pci_dev_t primary_ata_device;
-extern pager_directory_t *pager_dir;
 
 ata_device_t primary_base = {.secondary = 0};
 ata_device_t primary_replica = {.secondary = 1};

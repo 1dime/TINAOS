@@ -3,7 +3,6 @@
 
 #include <stdint.h>
 #include <interrupts/interrupts.h>
-#include <memory.h>
 #include <bios/bios.h>
 
 //arbitrary page size

@@ -13,6 +13,15 @@ size_t strlen(const char* str)
     return len;
 }
 
+void* memcpy(void *destination, void const *src, int number)
+{
+    char *value = destination;
+    char *p = destination;
+    const char *q = src;
+    while(number--)
+        *p++ = *q++;
+    return value;
+}
 int memcmp(uint8_t* first, uint8_t* second, int n)
 {
     while(n--)
@@ -74,7 +83,7 @@ char *separate_string(char **string, const char* delimiter)
                     s = NULL;
                 else
                     s[-1] = 0;
-                string = s;
+                *string = s;
                 return token;
             }
         } while ( sub_count != 0 );
@@ -82,4 +91,11 @@ char *separate_string(char **string, const char* delimiter)
     }
 }
 
+char *string_duplicate(const char *source)
+{
+    int length = strlen(source) + 1;
+    char *destination = malloc(length);
+    memcpy(destination, source, length);
+    return destination;
+}
 #endif

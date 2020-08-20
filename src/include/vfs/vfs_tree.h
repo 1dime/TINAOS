@@ -31,6 +31,6 @@ typedef struct vfs_tree
 } vfs_tree_t;
 
 
-#define for_each(node, list) for(list_node_t *node = list->top_of_list; node != NULL; node = node->after);
+#define foreach(node, list) for(list_node_t *node = list->top_of_list; node != NULL; node = node->after);
 
 #endif

@@ -1,6 +1,5 @@
 #ifndef BIOS
 #define BIOS
-#include <interrupts/interrupts.h>
 //I need these structs to get info from the bios
 typedef struct bios_register
 {

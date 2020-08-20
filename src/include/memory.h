@@ -2,7 +2,6 @@
 #define MEMORY
 #include <sys/malloc.h>
 #include <memory/pager.h>
-#include <string.h>
 extern uint32_t kernel_end;
 extern pager_directory_t *pager_dir;
 uint32_t placement_address = (uint32_t)&kernel_end;
@@ -14,15 +13,6 @@ void* calloc(uint32_t number, uint32_t size)
     return custom_ptr;
 }
 
-void* memcpy(void *destination, void const *src, int number)
-{
-    char *value = destination;
-    char *p = destination;
-    const char *q = src;
-    while(number--)
-        *p++ = *q++;
-    return value;
-}
 
 void * heap_start;
 void * heap_end;
@@ -31,7 +21,7 @@ void * heap_max;
 
 extern void * heap_start, * heap_end, *heap_top;
 
-uint32_t _malloc_(uint32_t size, int align, uint32_t *phys)
+uint32_t malloc_a(uint32_t size, int align, uint32_t *phys)
 {
     if(heap_start != NULL)
     {
@@ -68,6 +58,6 @@ uint32_t _malloc_(uint32_t size, int align, uint32_t *phys)
 
 void *malloc_4k(unsigned int size)
 {
-    return _malloc_(size, 1, 0);
+    return malloc_a(size, 1, 0);
 }
 #endif

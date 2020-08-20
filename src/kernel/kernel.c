@@ -1,12 +1,18 @@
 
-#include <display/vga.h>
+#include <stddef.h>
 #include <memory.h>
-#include <drivers/keyboard.h>
+#include <string.h>
+#include <display/vga.h>
+#include <interrupts/interrupts.h>
+#include <stdbool.h>
+#include <drivers/pci.h>
 #include "../drivers/pci.c"
-#include "../memory/manager.c"
-#include <stdio.h>
+#include <drivers/ata.h>
+#include "../drivers/ata.c"
+#include "../vfs/vfs.c"
 #include "../drivers/ata.c"
 
+#include <sys/fcntl.h>
 int kernel_start()
 {
     //Setup the terminal goods
