@@ -1,6 +1,6 @@
 #include <display/vga.h>
 #include "../sys/string.c"
-#include "../sys/interrupts.c"
+#include "../sys/system.c"
 static inline uint8_t vga_color_entry(enum vga_color_palette fg_color, enum vga_color_palette bg_color)
 {
     return fg_color | bg_color << 4;

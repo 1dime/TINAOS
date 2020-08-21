@@ -1,6 +1,6 @@
 #ifndef INTERRUPTS_C
 #define INTERRUPTS_C
-#include <sys/interrupts.h>
+#include <sys/system.h>
 int inb(unsigned int port)
 {
     int val;
