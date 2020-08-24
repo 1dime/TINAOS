@@ -61,19 +61,25 @@ void put_terminal_char(char c)
             }
         }
     }
-
 }
 
-void write_to_terminal(const char* data, size_t size)
+void write_to_terminal(char* data, size_t size)
 {
     for(size_t idx = 0; idx < size; idx++)
     {
         put_terminal_char(data[idx]);
     }
+    //Check if we should add a new line
+    if(NEW_LINE_AT_END == 1)
+    {
+        //Add a new line
+        put_terminal_char('\n');
+    }
 }
 
 void write_string_to_terminal(char* data)
 {
+    //Write the string
     write_to_terminal(data, strlen(data));
 }
 

@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdarg.h>
-#include "../sys/malloc.c"
+#include "../../sys/malloc.c"
 
 size_t strlen(const char* str);
 void* memcpy(void *destination, void const *src, int number);

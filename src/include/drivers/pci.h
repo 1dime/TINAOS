@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include <interrupts/interrupts.h>
+#include <sys/system.h>
 #ifndef PCI_H
 #define PCI_H
 

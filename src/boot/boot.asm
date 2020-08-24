@@ -4,10 +4,6 @@ MEMINFO equ 1 << 1
 FLAGS equ MBALIGN | MEMINFO
 MAGIC equ 0x1BADB002
 CHECKSUM equ -(MAGIC + FLAGS)
-VM_BASE     equ 0xC0000000
-PDE_INDEX   equ (VM_BASE >> 22)
-PSE_BIT     equ 0x00000010
-PG_BIT      equ 0x80000000
 
 section .multiboot
 align 4
@@ -17,11 +13,6 @@ align 4
 
 section .data
 align 4096
-tmp_page_dir:
-	dd 0x00000083
-	times(PDE_INDEX - 1) dd 0
-	dd 0x00000083
-	times(1024 - PDE_INDEX - 1) dd 0
 
 section .bss
 align 16
