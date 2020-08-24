@@ -4,6 +4,7 @@
 #include <stddef.h>
 #define WIDTH 80
 #define HEIGHT 25
+#define NEW_LINE_AT_END 1
 
 enum vga_color_palette
 {
@@ -34,7 +35,7 @@ void set_terminal_color(uint8_t color);
 void put_terminal_entry_at(char c, uint8_t color, size_t x, size_t y);
 void put_terminal_char(char c);
 
-void write_to_terminal(const char* data, size_t size);
+void write_to_terminal(char* data, size_t size);
 void write_string_to_terminal(char* data);
 
 void write_with_color(enum vga_color_palette color, char* data);
