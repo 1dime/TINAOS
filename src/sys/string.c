@@ -94,4 +94,5 @@ char *strdup(const char *source)
     memcpy(destination, source, length);
     return destination;
 }
+
 #endif
