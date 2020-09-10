@@ -30,6 +30,6 @@ int kernel_start()
     //Enter kernel loop, don't stop until commanded to do so
     while(!exit_kernel_loop)
     {
-
+        
     }
 }

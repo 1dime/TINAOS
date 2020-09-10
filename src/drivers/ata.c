@@ -193,9 +193,6 @@ void initiliaze_ata_driver()
             //Set the drive data ahead
             drive_data[idx + 1] = ata_buffer[ATA_MODEL + idx];
         }
-        drive->drive_id = (PRIMARY_BUS << 1) | MASTER_DRIVE;
-        drive->drive_name = drive_data;
-        drive->read = ata_read;
         //Print that we found a drive called drive_data
         cprintf(green, "[ATA] => initialize_ata_driver: Found primary drive called %s", drive_data);
     }
