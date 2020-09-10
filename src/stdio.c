@@ -16,6 +16,21 @@ void htoc(uint16_t hex)
     put_terminal_char(bchars[(hex & 0x0F) >> 0]);
 }
 
+inline int8_t isdigit(char c)
+{
+    return c >= '0' && c <= '9';
+}
+
+inline int8_t isalpha(char c)
+{
+    return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+}
+
+inline int8_t isalnum(char c)
+{
+    return isdigit(c) || isalpha(c);
+}
+
 void itoa(unsigned i,unsigned base,char* buf) {
 	int pos = 0;
 	int opos = 0;
@@ -38,6 +53,31 @@ void itoa(unsigned i,unsigned base,char* buf) {
 	buf[opos] = 0;
 }
 
+int32_t atoi(const char* s)
+{
+	uint8_t len = (uint8_t) strlen(s);
+	int32_t result = 0;
+	uint32_t mul = 1;
+
+	while (len > 0 && isdigit(s[len - 1])) //loop from right to left
+	{
+		result += (s[--len] - '0') * mul;
+		mul *= 10;
+	}
+
+	if (len == 1 && s[0] == '-') //negative number
+	{
+		result *= -1;
+        len = 0; //completed
+	}
+
+    if (len == 0)
+    {
+        return result; //valid number
+    }
+	
+    return -1; //invalid string
+}
 void cprintf(uint8_t color, char* fmt, ...)
 {
     uint8_t old_color = terminal_color;
@@ -124,6 +164,5 @@ void printf(char* fmt, ...)
         put_terminal_char('\n');
     va_end(ap); 
 }
-
 
 #endif
