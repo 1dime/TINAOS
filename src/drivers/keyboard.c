@@ -10,6 +10,8 @@ int scan_code()
         //character =  the passed code
         return inb(0x60);
     }
+
+    return 0; //?
 }
 
 bool key_pressed()

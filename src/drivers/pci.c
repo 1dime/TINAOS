@@ -40,40 +40,44 @@ uint16_t pci_config_read_word(uint8_t bus, uint8_t slot, uint8_t func, uint8_t o
 
 uint16_t pci_check_vendor(uint16_t bus, uint16_t slot)
 {
-    uint16_t vendor, device;
-    //Get the vendor
-    if((vendor = pci_config_read_word(bus, slot, 0, 0)) != 0xFFFF)
-    {
-        //Get the device
-        device = pci_config_read_word(bus, slot, 0, 2);
-    }
-    //Return the vendor
-    return (vendor);
+    uint16_t vendor = pci_config_read_word(bus, slot, 0, 0);
+    //uint16_t device = pci_config_read_word(bus, slot, 0, 2); //UNUSED
+
+    //probably some checks?
+
+    return vendor;
 }
 
 
 uint16_t pci_get_vendor(uint8_t bus, uint8_t slot, uint8_t function)
 {
-    uint16_t vendor;
-    //Check if a vendor exists
-    if((vendor == pci_config_read_word(bus, slot, function, 0)) != 0xFFFF)
-    {
-        //Return the vendor
-        return (vendor);
-    } 
-    //Return the vendor
-    return(0xFFFF);
+    //uint16_t vendor = pci_config_read_word(bus, slot, function, 0);
+    ////Check if a vendor exists
+    //if(vendor != 0xFFFF)
+    //{
+    //    //Return the vendor
+    //    return vendor;
+    //} 
+//
+    ////Return the vendor
+    //return 0xFFFF;
+
+    return pci_config_read_word(bus, slot, function, 0);
 }
 
 uint16_t pci_check_device(uint16_t bus, uint16_t slot, uint16_t function)
 {
-    uint16_t device;
-    //Check if a device exists at that bus and slot
-    if((device = pci_config_read_word(bus, slot, function, 2)) != 0xFFFF)
-        //Return the device
-        return (device);
-    //Return nothing
-    return (0xFFFF);    
+    //uint16_t device = pci_config_read_word(bus, slot, function, 2);
+    ////Check if a device exists at that bus and slot
+    //if(device != 0xFFFF)
+    //{
+    //    //Return the device
+    //    return device;
+    //}
+    ////Return nothing
+    //return (0xFFFF);    
+
+    return pci_config_read_word(bus, slot, function, 2);
 }
 
 uint16_t pci_get_device(uint16_t bus, uint16_t device, uint16_t function)

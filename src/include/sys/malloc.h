@@ -17,7 +17,7 @@ static union header
     unsigned u;
     void (*f) (void);
   } x;
-} freelist ={&freelist, 0}, *freep = &freelist;
+} freelist ={ {&freelist, 0} }, *freep = &freelist;
  
 void *malloc(unsigned nbytes);
 void free(void *ptr);

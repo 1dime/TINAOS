@@ -3,8 +3,9 @@
 #include <stdarg.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <display/vga.h>
 //Define kernel panic
-#define krnl_panic(...){make_vga_terminal();cprintf(red, "[KERNEL_PANIC] => Kernel panic in %s at function %s", __FILE__, __LINE__, __func__);cprintf(red, __VA_ARGS__);for(;;);}
+#define krnl_panic(...){make_vga_terminal();cprintf(VGA_COLOR_RED, "[KERNEL_PANIC] => Kernel panic in %s at function %s", __FILE__, __LINE__, __func__);cprintf(VGA_COLOR_RED, __VA_ARGS__);for(;;);}
 
 char tbuf[32];
 char bchars[] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
@@ -81,7 +82,7 @@ int32_t atoi(const char* s)
 void cprintf(uint8_t color, char* fmt, ...)
 {
     uint8_t old_color = terminal_color;
-    terminal_color = vga_color_entry(color, white);
+    terminal_color = vga_color_entry(color, VGA_COLOR_WHITE);
     
     va_list ap;
     char *p, *sval;
@@ -96,8 +97,8 @@ void cprintf(uint8_t color, char* fmt, ...)
         }
         switch (*++p) {
             case 'c':
-                sval = (char)(va_arg(ap, int) & ~0xFFFFFF00);
-                put_terminal_char(sval);
+                sval = (char*)(va_arg(ap, int) & ~0xFFFFFF00);
+                put_terminal_char((int)sval);
                 break;
             case 'd':
                 ival = va_arg(ap, int);
@@ -139,8 +140,8 @@ void printf(char* fmt, ...)
         }
         switch (*++p) {
             case 'c':
-                sval = (char)(va_arg(ap, int) & ~0xFFFFFF00);
-                put_terminal_char(sval);
+                sval = (char*)(va_arg(ap, int) & ~0xFFFFFF00);
+                put_terminal_char((int)sval);
                 break;
             case 'd':
                 ival = va_arg(ap, int);

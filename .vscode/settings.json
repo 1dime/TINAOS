@@ -20,6 +20,7 @@
         "valarray": "c",
         "*.inc": "c",
         "sstream": "c",
-        "functional": "c"
+        "functional": "c",
+        "*.def": "c"
     }
 }

@@ -4,7 +4,9 @@
 #include "../drivers/keyboard.c"
 #include <stdbool.h>
 #include <stdarg.h>
-extern _interupt();
+
+//extern _interrupt(); // not needed
+
 int initialize_drivers()
 {
     //Print that we are initializing drivers
@@ -32,4 +34,6 @@ int kernel_start()
     {
         
     }
+
+    return 0;//unreachable
 }

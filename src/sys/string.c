@@ -27,6 +27,8 @@ int memcmp(uint8_t* first, uint8_t* second, int n)
         first += 1;
         second += 1;
     }
+
+    return n; //?
 }
 
 void memset(char *dst,  char *value, int n)

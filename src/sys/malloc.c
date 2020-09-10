@@ -45,7 +45,7 @@ void free(void *ptr)
      union header *bp = (union header *) ptr - 1, *p;
      if (ptr == 0) return;
      for (p = freep;; p = p->s.link)
-         if (bp > p && bp < p->s.link || p >= p->s.link && (bp > p || bp < p->s.link)) break;
+         if ( (bp > p && bp < p->s.link) || (p >= p->s.link && (bp > p || bp < p->s.link))) break;
      if (bp + bp->s.size == p->s.link)
      {
         bp->s.size += p->s.link->s.size;

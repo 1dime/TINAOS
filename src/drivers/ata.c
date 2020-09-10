@@ -1,6 +1,7 @@
 #ifndef ATA_C
 #define ATA_C
 #include <drivers/ata.h>
+#include <display/vga.h>
 
 void poll_ata_drive(uint16_t io)
 {
@@ -50,12 +51,12 @@ void ata_read_once(uint8_t *buffer, uint32_t lba, ata_drive* device)
             break;
         default:
             write_error_string("[ATA] => ata_read_once: Unknown drive");
-            return 0;
+            return; //exit function
     }
     //Identify which command we can use
     uint8_t command = (drive==MASTER_DRIVE ? 0xE0 : 0xF0);
     //Identify the slave bit
-    uint8_t slave_bit = (drive == MASTER_DRIVE ? 0x00 : 0x01);
+    //uint8_t slave_bit = (drive == MASTER_DRIVE ? 0x00 : 0x01); //UNUSED
     //Write the command out
     outb(io + ATA_HD_SEL , (command | (uint8_t)((lba >> 24 & 0x0F))));
     outb(io + 1, 0x00);
@@ -80,8 +81,8 @@ void ata_read_once(uint8_t *buffer, uint32_t lba, ata_drive* device)
         //Just a delay
         inb(io + ATA_ALT_STATUS);
     }
-    //Return success
-    return 1;
+    //Return success -> void return type
+    //return 1;
 }
 
 void ata_read(uint8_t *buffer, uint32_t lba, uint32_t sector_count, ata_drive* drive)
@@ -151,13 +152,13 @@ uint8_t identify_drive(uint8_t bus, uint8_t drive)
         if(status & ATA_ERR)
         {
             //Print that no drive was found on bus
-            cprintf(cyan, "[ATA] => identify_drive: No drive found on %s bus", bus==PRIMARY_BUS?"primary":"secondary");
+            cprintf(VGA_COLOR_CYAN, "[ATA] => identify_drive: No drive found on %s bus", bus==PRIMARY_BUS?"primary":"secondary");
             return 0;
         }
         //Notify that we will be polling now
         write_current_operation("identify_drive", "Polling drive until BSY bit is free");
         //Loop until BSY bit is free
-        while(inb(io + ATA_STATUS) & ATA_BSY != 0);
+        while( (inb(io + ATA_STATUS)) & (ATA_BSY != 0) );
         //Read the status
 read_status:    status = inb(io + ATA_STATUS);
         //We are now polling until DRQ bit is free
@@ -165,7 +166,7 @@ read_status:    status = inb(io + ATA_STATUS);
         //Loop while DRQ is set, go to read_status
         while(!(status & ATA_DRQ)) goto read_status;
         //Print that the drive is online
-        cprintf(green, "[ATA] => identify_drive: %s bus is online", bus==PRIMARY_BUS?"Primary":"Secondary");
+        cprintf(VGA_COLOR_GREEN, "[ATA] => identify_drive: %s bus is online", bus==PRIMARY_BUS?"Primary":"Secondary");
         //Now we have to read the data
         for(int i = 0; i < 256; i++)
         {
@@ -173,6 +174,8 @@ read_status:    status = inb(io + ATA_STATUS);
             *(uint16_t *)(ata_buffer + (i * 2)) = inw(io + ATA_DATA);
         }
     }
+
+    return 0;//?
 }
 
 
@@ -182,7 +185,7 @@ void initiliaze_ata_driver()
     if(identify_drive(PRIMARY_BUS, MASTER_DRIVE))
     {
         //Initiate a drive
-        ata_drive *drive = (ata_drive*) malloc(sizeof(ata_drive*));
+        //ata_drive *drive = (ata_drive*) malloc(sizeof(ata_drive*)); //UNUSED
         //Create a string holding drive data
         char* drive_data = (char*) malloc(40);
         //Loop for size of drive data
@@ -194,7 +197,7 @@ void initiliaze_ata_driver()
             drive_data[idx + 1] = ata_buffer[ATA_MODEL + idx];
         }
         //Print that we found a drive called drive_data
-        cprintf(green, "[ATA] => initialize_ata_driver: Found primary drive called %s", drive_data);
+        cprintf(VGA_COLOR_GREEN, "[ATA] => initialize_ata_driver: Found primary drive called %s", drive_data);
     }
     identify_drive(SECONDARY_BUS, SLAVE_DRIVE);
 }
