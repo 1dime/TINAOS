@@ -32,7 +32,7 @@ int kernel_start()
     //Enter kernel loop, don't stop until commanded to do so
     while(!exit_kernel_loop)
     {
-        
+        ata_drive* drive = get_main_drive();
     }
 
     return 0;//unreachable

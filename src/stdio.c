@@ -112,6 +112,16 @@ void cprintf(uint8_t color, char* fmt, ...)
                 for(sval = va_arg(ap, char *); *sval; sval++)
                     put_terminal_char(*sval);
                 break;
+            case 'x':
+                //Get next argument
+                ival = va_arg(ap, int);
+                //Prepare a 32 character long string
+                char str[32] = {0};
+                //Convert the integer ival to a string
+                itoa(ival, 16, str);
+                //Write the integer to the screen
+                write_to_terminal(str, strlen(str));
+                break;
             default:
                 put_terminal_char(*p);
                 break;
